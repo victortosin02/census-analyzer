@@ -1,0 +1,36 @@
+services:
+  griddb-server:
+    build:
+      context: griddb-server
+      dockerfile: Dockerfile
+    container_name: griddb-server
+    user: root
+    expose:
+      - "10001"
+      - "10010"
+      - "10020"
+      - "10040"
+      - "20001"
+      - "41999"
+    environment:
+      NOTIFICATION_MEMBER: 1
+      GRIDDB_CLUSTER_NAME: myCluster
+    healthcheck:
+      test: ["CMD", "gs_sh"]
+      interval: 60s
+      timeout: 20s
+      retries: 5
+
+  server:
+    build:
+      context: server
+      dockerfile: Dockerfile
+    container_name: census-analyzer
+    expose:
+      - "4000"
+    ports:
+      - "4000:4000"
+    depends_on:
+      - griddb-server
+    links:
+      - griddb-server
