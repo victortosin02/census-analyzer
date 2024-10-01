@@ -1,57 +1,35 @@
-Census Data Analytics Using GridDB, Docker, and Node.js
-Introduction
+# Census Data Analytics Using GridDB, Docker, and Node.js
+## Introduction
 In this project, we will concentrate on a census analytics system designed to ingest data from a source system, analyze it, generate insights from census data, and finally store the processed data in a target system. Census data, in this case, refers to the demographic information retrieved from a population at regular intervals, typically conducted by governments to gather information about the population's characteristics, such as age, gender, race, income, education level, household composition, and more.
 
 The census analytics system has proven efficient, allowing census officials to upload census data from household enumeration and generate insights after processing this data. To narrow down the deliverables, this project seeks to analyze and calculate the minimum and maximum income and family size for each occupation and store the results in a GridDB database, leveraging stacks of technologies such as Node.js, Docker, and GridDB.
 
-Methodology
+## Methodology
 The purpose of this project is to analyze sample data of households from an enumeration exercise, ingest the data, analyze it, and load the analyzed data into a database. To accomplish this, we will leverage Docker because it makes it easy to spin up all the required services.
 
-Technologies Used:
-The following stack of technologies was leveraged to efficiently analyze the census data:
+## Technologies Used:
+The following stack of technologies was leveraged to efficiently analyze the census data:## 
+- JavaScript for programming
+- GridDB for storing and managing data
+- Docker for containerization and application portability
 
-JavaScript for programming
-JDBC for database connectivity
-GridDB for storing and managing data
-Docker for containerization and application portability
-Prerequisites
+## Prerequisites
 What You Need to Install:
-Node.js
-Docker Desktop
-GridDB will be downloaded and installed in a Dockerfile in subsequent sections.
+- Node.js
+- Docker Desktop
+- GridDB will be downloaded and installed in a Dockerfile in subsequent sections.
 
-How to Follow Along
-If you plan to code along while you read this article, you can grab the source code from the repository below:
-
-Methodology
-The purpose of this project is to analyze sample data of households from an enumeration exercise from a source system, analyze the ingested data and load analyzed data to a database. To accomplish this, we will be leveraging Docker because it makes it easy to spin up all the required services.
-
-Technologies Used:
-The following stack of technologies were leveraged on to efficiently analyze the census data: Java for programming
-
-Javasccript for programming
-JDBC for database connectivity
-GridDB for storing and managing data
-Docker For Containerization and Application Portability
-
-Prerequisites
-What you need to install:
-NodeJS
-Docker Desktop
-Griddb will be downloaded and installed in a Dockerfile in consquent sections.
-
-How to Follow Along
+## How to Follow Along
 If you plan to code along yourself while you read this article, you can grab the source code from the repo below:
 
 git clone https://github.com/victortosin02/census.git
 
-
-Step 1: Create a Server Folder
+### Step 1: Create a Server Folder
 We start by creating a server folder and initialize by running npm to generate a package.json file. You can name the folder anything you want but in my case I named it server:
 
 npm i
 
-Step 2: Install Required Packages
+### Step 2: Install Required Packages
 npm i express morgan joi uuid csv-parser multer griddb-node-api cors.
 Additionally, as a nice to have, I installed nodemon to effect server restart when changes are registered during development. Below is the command tominstall nodemon:
 
@@ -91,19 +69,19 @@ npm i -D nodemon
     }
 }
 
-Data Ingestion, Processing and Loading
+## Data Ingestion, Processing and Loading
 From the implementation end after provisioning and configuring the server environment, we will server.js file where we create a port for running the server. At this section, we will create anoter db.js file which is responsible for implementation of store configuration, database and schema initialization and and varoius insertion and query functions for the database. 
 
-Step 3: Create Server.js File
+### Step 3: Create Server.js File
 Create an server.js file and insert the following code:
 
 import express from 'express';
-import censusAnalyzerRoutes from './routes/censusAnalyzerRoutes.js';
+// import censusAnalyzerRoutes from './routes/censusAnalyzerRoutes.js';
 
 const app = express();
 
 // Mounting routes at '/api'
-app.use('/api', censusAnalyzerRoutes);
+// app.use('/api', censusAnalyzerRoutes);
 
 // Test API route directly in server.js
 app.get('/test', (req, res) => {
@@ -123,10 +101,10 @@ If you installed nodemon as a dev dependency, you’ll need to add this line of 
 
 "dev": "nodemon index.js"
 
-Step 4: Run the Application
+### Step 4: Run the Application
 Having installed the nodemon dependency, start the application by running npm run dev. 
 
-Step 5: Setup the GridDB Database
+### Step 5: Setup the GridDB Database
 After provisioning a server to run our application, I will proceed to create a config folder to configure all database connections to griddb which we shall leverage later on when uploading files, processing and inserting processed data to griddb. I shall start by provisoning a container name for this project and in this case I named it "census-data".
 
 Below is the db.js code snippet responsible for implementing various database configuration and implemetation. Below is the code snippets for our database setup and implementation.
@@ -267,25 +245,6 @@ async function multiInsert(data, db) {
     }
 }
 
-async function queryAll(conInfo, store) {
-    const sql = `SELECT *`;
-    const cont = await store.putContainer(conInfo);
-    const query = await cont.query(sql);
-    try {
-        const rowset = await query.fetch();
-        const results = [];
-
-        while (rowset.hasNext()) {
-            const row = rowset.next();
-            results.push(row);
-        }
-        return { results, length: results.length };
-    } catch (err) {
-        console.log(err);
-        return err;
-    }
-}
-
 async function queryByID(id, conInfo, store) {
     try {
         const cont = await store.putContainer(conInfo);
@@ -296,48 +255,7 @@ async function queryByID(id, conInfo, store) {
     }
 }
 
-// Delete container
-async function dropContainer(store, containerName) {
-    store
-        .dropContainer(containerName)
-        .then(() => {
-            console.log("drop ok");
-            return store.putContainer(conInfo);
-        })
-        .catch((err) => {
-            if (err.constructor.name == "GSException") {
-                for (var i = 0; i < err.getErrorStackSize(); i++) {
-                    console.log("[%d]", i);
-                    console.log(err.getErrorCode(i));
-                    console.log(err.getMessage(i));
-                }
-            } else {
-                console.log(err);
-            }
-        });
-}
 
-//Delete entry
-const deleteByID = async(store, id, conInfo) => {
-    try {
-        const cont = await store.putContainer(conInfo);
-        let res = await cont.remove(id);
-
-        return [true, res];
-    } catch (error) {
-        return [false, error];
-    }
-};
-
-const editByID = async(store, conInfo, data) => {
-    try {
-        const cont = await store.putContainer(conInfo);
-        const res = await cont.put(data);
-        return [true, ""];
-    } catch (err) {
-        return [false, err];
-    }
-};
 
 export {
     initStore,
@@ -346,17 +264,13 @@ export {
     createContainer,
     insert,
     multiInsert,
-    queryAll,
     dropContainer,
     containersInfo,
-    containerName,
     queryByID,
-    deleteByID,
-    editByID,
 };
 
 
-Step 6: Read and process the census data
+### Step 6: Read and process the census data
 To start ingesting data, we need to upload census data so we can extract relevant data and commence processing of the data based on defined goals and objectives. In our case, we will be uplaoding an input.csv file that contains census data for households across various occupation. The parameters of concern are ssn, family size, occupation, and income. We will proceed by creating a utils folder and create a file called csv.js. This file will be responsible for reading and processing our csv file. The way we will have this setup will be usch that we will upload the file using multer. Below is our csv.js code snippet.
 
 // Use import statements for ES modules
@@ -415,7 +329,7 @@ export const processData = async(data) => {
     return occupationStats;
 };
 
-Step 7: Data Insertion to Griddb Database:
+### Step 7: Data Insertion to Griddb Database:
 After reading the csv file and processing the data to derive the minimun and maximum family size and income per occupation in the census data, we will be creating a censusAnalyzerController.js that inserts the analytics performed into a griddb database based on the erstwile provision in our db.js file. The code below put into proper context what censusAnalyzerController.js does and why it is to central both to our analytics and data insertion.
 
 import { initGridDbTS, insert, queryByID } from "../config/db.js";
