@@ -58,6 +58,7 @@ Clone the project
 ```bash
   git clone https://github.com/victortosin02/census-analyzer.git
 ```
+The server runs on localhost:4000. 
 
 Go to the project directory
 
@@ -72,8 +73,11 @@ Run docker
 ```bash
  docker-compose up
 ```
-
-Then run
+To interact with the running GridDB container (griddb-server) and join it to the Docker cluster (myCluster).
+Run this command:
+```bash
+ docker exec -it griddb-server gs_joincluster -c myCluster -u admin/admin
+```
 
 ## Tech Stack
 
