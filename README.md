@@ -82,7 +82,7 @@ Run this command:
 After running this command, proceed to postman or any api testing platform of your choice to start testing the API. Follow the steps belows while testing:
 
 - Add the APi route http://localhost:4000/api/add-census-data with a POST method
-- Proceed to select body and then form-data to upload a csv file.
+- Proceed to select body and then form-data to upload a csv file. in my case I added a file called input.csv in the server directory for testing purpose.
 - In the key field, type uploaded_file. You can change it to anything you want but ensure it is the exact name you have as a multer parameter in the censusAnalyzerRoutes.js code.
 - Then proceed to upload your csv file ensuring it is the same expected input from the csv.js file becuase processing will be done based on this parameters extracted.
 Upon hitting send, you will get a 201 reponse displaying the analyzed data.
