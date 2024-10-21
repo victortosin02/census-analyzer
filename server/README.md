@@ -1,6 +1,6 @@
 ## CENSUS ANALYZER
 
-Grid db mind map: The servers are used to store the data coming from the frontend.
+The server are used to store the census data coming and then run analytics based on the household data inserted
 
 ## Author
 
