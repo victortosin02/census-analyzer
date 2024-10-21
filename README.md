@@ -36,7 +36,7 @@ Contributions are always welcome!
 To deploy this project run
 
 ```bash
-  npm run dev
+  npm run build
 ```
 
 ## Installation
