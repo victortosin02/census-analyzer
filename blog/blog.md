@@ -447,8 +447,9 @@ router.post('/add-census-data', upload.single('uploaded_file'), addCensusData);
 export default router;
 
 Step 9: Testing our Application
-To test our application, we need to make our application portable and ensure that both the griddb server and the application connects and communicate. Toa chieve this, we will create a docker-compose.yml file to establish a connection. Below is our docer compose file:
+To test our application, we need to make our application portable and ensure that both the griddb server and the application connects and communicate. To achieve this, we will create a docker-compose.yml file to establish a connection. Below is our docer compose file:
 
+```
 services:
   griddb-server:
     build:
@@ -488,14 +489,19 @@ services:
 ```
 After putting every bits and pieces together, we shall proceed to run the command below to build and start our application:
 
+```
 docker-compose up --build
+```
 
-After the building and spinning up of our container, we shall run this command to ensure we join the GridDB node to the GridDB cluster. 
+After the building and spinning up of our container, we shall run this command to ensure we join the GridDB node to the GridDB cluster.
 
+```
 docker exec -it griddb-server gs_joincluster -c myCluster -u admin/admin
+```
 
 After running this command, we will proceed to postman or any api testing platform of your choice to start testing the API. Add the APi route http://localhost:4000/api/add-census-data with a POST method and proceed to select body and then form-data to upload a csv file. In the key field, type uploaded_file. You can change it to anything you want but ensure it is the exact name you have as a multer parameter in the censusAnalyzerRoutes.js code. Then proceed to upload your csv file ensuring it is the same expected input from the csv.js file becuase processing will be done based on this parameters extracted. AUpon hitting send, you will get a 201 reponse below:
 
+```
 {
     "success": true,
     "message": "Census data saved successfully",
@@ -507,7 +513,7 @@ After running this command, we will proceed to postman or any api testing platfo
         "maxFamilySize": 10
     }
 }
+```
 
-
-Conclusion
+## Conclusion
 In this project, we have successfully built a comprehensive census analytics system leveraging GridDB, Docker, and Node.js. Through this journey, we demonstrated how to set up and configure a scalable and efficient data processing pipeline capable of ingesting, analyzing, and storing census data. The combination of GridDB, Docker, and Node.js has proven to be a powerful stack for building scalable and efficient data analytics systems. By following the outlined steps and leveraging the provided Docker configurations, you can replicate and extend this solution to meet specific needs and handle various data analytics tasks. We encourage you to explore the code repository and experiment with the setup to gain a deeper understanding of the system. With these tools and methodologies, you are well-equipped to tackle complex data analytics challenges and derive actionable insights from vast datasets.
