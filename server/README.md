@@ -1,22 +1,17 @@
-## GRID DB MIND MAP
+## CENSUS ANALYZER
 
 Grid db mind map: The servers are used to store the data coming from the frontend.
 
-## Authors
+## Author
 
-- [@BabajideOyafemi](https://github.com/Babajide777)
-- [@kehindeOyafemi](https://github.com/kennyoyaf)
+- [@VictorOladejo](https://github.com/victortosin02)
 
 ## API Reference
 
-route details to access the different functionalities
+route detail to add cenus data for analysis
 
 ```bash
-  GET /all-map-items
-  GET /map-detail/${id}
-  POST /add-map-item
-  PUT /edit-map-item/${id}
-  DELETE /delete-map-item/${id}
+  GET /api/add-census-data
 ```
 
 ## Documentation
@@ -41,7 +36,7 @@ Contributions are always welcome!
 To deploy this project run
 
 ```bash
-  npm start
+  npm run dev
 ```
 
 ## Installation
@@ -54,21 +49,17 @@ Install project with npm
 
 ## Feedback
 
-If you have any feedback, please reach out to us at j.oyafemi@gmail.com
+If you have any feedback, please reach out to us at victortosin01@gmail.com
 
 ## Run Locally
 
 Clone the project
 
 ```bash
-  git clone https://github.com/Babajide777/grid-db-mind-map.git
+  git clone https://github.com/victortosin02/census-analyzer.git
 ```
 
 Go to the project directory
-
-```bash
- cd server
-```
 
 Build docker compose file
 
@@ -81,6 +72,8 @@ Run docker
 ```bash
  docker-compose up
 ```
+
+Then run
 
 ## Tech Stack
 
