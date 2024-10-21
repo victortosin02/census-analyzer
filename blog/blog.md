@@ -32,7 +32,7 @@ npm i
 ### Step 2: Install Required Packages
 npm i express morgan joi uuid csv-parser multer griddb-node-api cors.
 Additionally, as a nice to have, I installed nodemon to effect server restart when changes are registered during development. Below is the command tominstall nodemon:
-
+```
 npm i -D nodemon
 
 {
@@ -68,13 +68,13 @@ npm i -D nodemon
         "nodemon": "^3.0.1"
     }
 }
-
+```
 ## Data Ingestion, Processing and Loading
 From the implementation end after provisioning and configuring the server environment, we will server.js file where we create a port for running the server. At this section, we will create anoter db.js file which is responsible for implementation of store configuration, database and schema initialization and and varoius insertion and query functions for the database. 
 
 ### Step 3: Create Server.js File
 Create an server.js file and insert the following code:
-
+```
 import express from 'express';
 // import censusAnalyzerRoutes from './routes/censusAnalyzerRoutes.js';
 
@@ -96,7 +96,7 @@ const port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
-
+```
 If you installed nodemon as a dev dependency, you’ll need to add this line of code to the “scripts” section in your package.json file:
 
 "dev": "nodemon index.js"
@@ -108,7 +108,7 @@ Having installed the nodemon dependency, start the application by running npm ru
 After provisioning a server to run our application, I will proceed to create a config folder to configure all database connections to griddb which we shall leverage later on when uploading files, processing and inserting processed data to griddb. I shall start by provisoning a container name for this project and in this case I named it "census-data".
 
 Below is the db.js code snippet responsible for implementing various database configuration and implemetation. Below is the code snippets for our database setup and implementation.
-
+```
 import griddb from "griddb-node-api";
 
 const containerName = "census-data";
@@ -209,10 +209,12 @@ async function containersInfo(store) {
             });
     }
 }
+```
+
 
 /**
  * Insert data to GridDB
- */
+```
 async function insert(data, container) {
     try {
         let savedData = await container.put(data);
@@ -268,12 +270,12 @@ export {
     containersInfo,
     queryByID,
 };
-
+```
 
 ### Step 6: Read and process the census data
 To start ingesting data, we need to upload census data so we can extract relevant data and commence processing of the data based on defined goals and objectives. In our case, we will be uplaoding an input.csv file that contains census data for households across various occupation. The parameters of concern are ssn, family size, occupation, and income. We will proceed by creating a utils folder and create a file called csv.js. This file will be responsible for reading and processing our csv file. The way we will have this setup will be usch that we will upload the file using multer. Below is our csv.js code snippet.
 
-// Use import statements for ES modules
+```
 import fs from 'fs';
 import csv from 'csv-parser';
 
@@ -328,10 +330,11 @@ export const processData = async(data) => {
 
     return occupationStats;
 };
-
+```
 ### Step 7: Data Insertion to Griddb Database:
 After reading the csv file and processing the data to derive the minimun and maximum family size and income per occupation in the census data, we will be creating a censusAnalyzerController.js that inserts the analytics performed into a griddb database based on the erstwile provision in our db.js file. The code below put into proper context what censusAnalyzerController.js does and why it is to central both to our analytics and data insertion.
 
+```
 import { initGridDbTS, insert, queryByID } from "../config/db.js";
 
 import { responseHandler } from "../utils/responseHandler.js";
@@ -420,11 +423,12 @@ const addCensusData = async (req, res) => {
 };
 
 export default addCensusData;
-
+```
 
 Step 8: Handling API Routes 
 To handle data routing and ensure that we upload the csv file through the route created, we will leverage on the multer package to route the uploaded file and then ensure that the data from the uploaded file is read and processed using in the addCensusData function in our censusAnalyzerController.js. We will create a censusAnalyzerRoutes.js file and below is the code for proper context:
 
+```
 import express from 'express';
 import addCensusData from '../controllers/censusAnalyzerController.js';
 import multer from 'multer';
@@ -478,7 +482,7 @@ services:
       - griddb-server
     links:
       - griddb-server
-
+```
 After putting every bits and pieces together, we shall proceed to run the command below to build and start our application:
 
 docker-compose up --build
