@@ -27,14 +27,15 @@ git clone https://github.com/victortosin02/census.git
 ### Step 1: Create a Server Folder
 We start by creating a server folder and initialize by running npm to generate a package.json file. You can name the folder anything you want but in my case I named it server:
 
-npm i
+npm install
 
 ### Step 2: Install Required Packages
 npm i express morgan joi uuid csv-parser multer griddb-node-api cors.
 Additionally, as a nice to have, I installed nodemon to effect server restart when changes are registered during development. Below is the command tominstall nodemon:
-```
+
 npm i -D nodemon
 
+```
 {
     "name": "grid-db-census-server",
     "version": "1.0.0",
@@ -69,6 +70,7 @@ npm i -D nodemon
     }
 }
 ```
+
 ## Data Ingestion, Processing and Loading
 From the implementation end after provisioning and configuring the server environment, we will server.js file where we create a port for running the server. At this section, we will create anoter db.js file which is responsible for implementation of store configuration, database and schema initialization and and varoius insertion and query functions for the database. 
 
@@ -76,12 +78,12 @@ From the implementation end after provisioning and configuring the server enviro
 Create an server.js file and insert the following code:
 ```
 import express from 'express';
-// import censusAnalyzerRoutes from './routes/censusAnalyzerRoutes.js';
+import censusAnalyzerRoutes from './routes/censusAnalyzerRoutes.js';
 
 const app = express();
 
 // Mounting routes at '/api'
-// app.use('/api', censusAnalyzerRoutes);
+app.use('/api', censusAnalyzerRoutes);
 
 // Test API route directly in server.js
 app.get('/test', (req, res) => {
@@ -108,6 +110,7 @@ Having installed the nodemon dependency, start the application by running npm ru
 After provisioning a server to run our application, I will proceed to create a config folder to configure all database connections to griddb which we shall leverage later on when uploading files, processing and inserting processed data to griddb. I shall start by provisoning a container name for this project and in this case I named it "census-data".
 
 Below is the db.js code snippet responsible for implementing various database configuration and implemetation. Below is the code snippets for our database setup and implementation.
+
 ```
 import griddb from "griddb-node-api";
 
