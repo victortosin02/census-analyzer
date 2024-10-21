@@ -31,20 +31,20 @@ Any additional information goes here
 
 Contributions are always welcome!
 
-## Deployment
-
-To deploy this project run
-
-```bash
-  npm run dev
-```
-
 ## Installation
 
 Install project with npm
 
 ```bash
   npm install
+```
+
+## Development
+
+To run this project in development mode
+
+```bash
+  npm run dev
 ```
 
 ## Feedback
