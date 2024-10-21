@@ -11,7 +11,7 @@ The server are used to store the census data coming and then run analytics based
 route detail to add cenus data for analysis
 
 ```bash
-  GET /api/add-census-data
+  POST /api/add-census-data
 ```
 
 ## Documentation
