@@ -1,22 +1,17 @@
-## GRID DB MIND MAP
+## CENSUS ANALYZER
 
-Grid db mind map: The servers are used to store the data coming from the frontend.
+The server are used to store the census data coming and then run analytics based on the household data inserted
 
-## Authors
+## Author
 
-- [@BabajideOyafemi](https://github.com/Babajide777)
-- [@kehindeOyafemi](https://github.com/kennyoyaf)
+- [@VictorOladejo](https://github.com/victortosin02)
 
 ## API Reference
 
-route details to access the different functionalities
+route detail to add cenus data for analysis
 
 ```bash
-  GET /all-map-items
-  GET /map-detail/${id}
-  POST /add-map-item
-  PUT /edit-map-item/${id}
-  DELETE /delete-map-item/${id}
+  POST /api/add-census-data
 ```
 
 ## Documentation
@@ -36,14 +31,6 @@ Any additional information goes here
 
 Contributions are always welcome!
 
-## Deployment
-
-To deploy this project run
-
-```bash
-  npm start
-```
-
 ## Installation
 
 Install project with npm
@@ -52,23 +39,28 @@ Install project with npm
   npm install
 ```
 
+## Development
+
+To run this project in development mode
+
+```bash
+  npm run dev
+```
+
 ## Feedback
 
-If you have any feedback, please reach out to us at j.oyafemi@gmail.com
+If you have any feedback, please reach out to us at victortosin01@gmail.com
 
 ## Run Locally
 
 Clone the project
 
 ```bash
-  git clone https://github.com/Babajide777/grid-db-mind-map.git
+  git clone https://github.com/victortosin02/census-analyzer.git
 ```
+The server runs on localhost:4000. 
 
 Go to the project directory
-
-```bash
- cd server
-```
 
 Build docker compose file
 
@@ -80,6 +72,11 @@ Run docker
 
 ```bash
  docker-compose up
+```
+To interact with the running GridDB container (griddb-server) and join it to the Docker cluster (myCluster).
+Run this command:
+```bash
+ docker exec -it griddb-server gs_joincluster -c myCluster -u admin/admin
 ```
 
 ## Tech Stack

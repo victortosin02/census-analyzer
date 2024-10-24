@@ -1,39 +1,66 @@
-### GRIDDB MIND MAP APP
+## CENSUS ANALYZER
 
-This application contains 2 folders: **client** and **server**
+The server are used to store the census data coming and then run analytics based on the household data inserted
 
-The **client** folder houses the frontend of the application, while the **server** folder houses the backend of the application.
+## Author
 
-Clone the repo
-git clone https://github.com/Babajide777/grid-db-mind-map.git
+- [@VictorOladejo](https://github.com/victortosin02)
 
-## Frontend
+## API Reference
+
+route detail to add cenus data for analysis
+
+```bash
+  POST /api/add-census-data
+```
+
+## Documentation
+
+- Node js
+- Express
+- Grid db
+- Joi
+- Morgan
+- Cors
+
+## Appendix
+
+Any additional information goes here
+
+## Contributing
+
+Contributions are always welcome!
+
+## Deployment
+
+To deploy this project run
+
+```bash
+  npm run build
+```
+
+## Installation
+
+Install project with npm
+
+```bash
+  npm install
+```
+
+## Feedback
+
+If you have any feedback, please reach out to us at victortosin01@gmail.com
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/victortosin02/census-analyzer.git
+```
+The server runs on localhost:4000. 
 
 Go to the project directory
-
-```bash
- cd client
-```
-
-Install dependencies
-
-```bash
- npm install
-```
-
-Start the server
-
-```bash
-  npm start
-```
-
-## Backend
-
-Go to the project directory
-
-```bash
- cd server
-```
 
 Build docker compose file
 
@@ -46,3 +73,20 @@ Run docker
 ```bash
  docker-compose up
 ```
+To interact with the running GridDB container (griddb-server) and join it to the Docker cluster (myCluster).
+Run this command:
+```bash
+ docker exec -it griddb-server gs_joincluster -c myCluster -u admin/admin
+```
+
+After running this command, proceed to postman or any api testing platform of your choice to start testing the API. Follow the steps belows while testing:
+
+- Add the APi route http://localhost:4000/api/add-census-data with a POST method
+- Proceed to select body and then form-data to upload a csv file. For the sake of testing, I added a file called input.csv in the server directory for testing purpose.
+- In the key field, type uploaded_file. You can change it to anything you want but ensure it is the exact name you have as a multer parameter in the censusAnalyzerRoutes.js code.
+- Then proceed to upload your csv file ensuring it is the same expected input from the csv.js file becuase processing will be done based on this parameters extracted.
+Upon hitting send, you will get a 201 reponse displaying the analyzed data.
+
+## Tech Stack
+
+Server: Node js, Express, Grid db
